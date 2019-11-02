@@ -1,0 +1,11 @@
+@app.route("/create_friend", methods=["POST"])
+def add_friend_to_db():
+    query = "INSERT INTO friends (first_name, last_name, occupation, created_at, updated_at) VALUES ((%(fn))s, (%(ln))s, (%(occup))s, NOW(), NOW());"
+    data = {
+        'fn': request.form['fname'],
+        'ln': request.form['lname'],
+        'occup': request.form['occ']
+    }
+    mysql = connectToMySQL("first_flask")
+    mysql.query_db(query, data)
+    return redirect("/")
